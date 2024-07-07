@@ -46,6 +46,9 @@ public class AccountController {
     @RequestMapping(value = "/page", method = {RequestMethod.POST, RequestMethod.GET})
     public ActionResult<List<AccountVO>> page(@ParameterObject @PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
                                               @ParameterObject AccountQueryDTO queryDto) {
+        if (queryDto == null) {
+            queryDto = new AccountQueryDTO();
+        }
         return ActionResult.success(accountService.page(pageable, queryDto));
     }
 
