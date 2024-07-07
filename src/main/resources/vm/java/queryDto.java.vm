@@ -1,0 +1,36 @@
+package ${cfg.queryDtoPackage};
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import java.util.Date;
+
+import ${package.Entity}.${entity};
+
+/**
+ * $!{table.comment} 查询条件
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Data
+@Schema(description = "$!{table.comment}")
+public class ${entity}QueryDTO extends ${entity} {
+#foreach($field in ${table.fields})
+    #if("$field.propertyName" == "id")
+        #if(${field.keyFlag})
+            #set($keyPropertyName=${field.propertyName})
+        #end
+        #if("$!field.comment" != "")
+            /**
+             * ${field.comment}
+             */
+        #end
+        @Schema(description = "$!{field.comment}")
+        private ${field.propertyType} ${field.propertyName};
+    #end
+#end
+}

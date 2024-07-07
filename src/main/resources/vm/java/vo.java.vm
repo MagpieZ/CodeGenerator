@@ -1,0 +1,34 @@
+package ${cfg.voPackage};
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import java.util.Date;
+
+import ${package.Entity}.${entity};
+
+/**
+ * $!{table.comment}
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Data
+@Schema(description = "$!{table.comment}")
+public class ${entity}VO extends ${entity}{
+#foreach($field in ${table.fields})
+    #if(${field.keyFlag})
+        #set($keyPropertyName=${field.propertyName})
+    #end
+    #if("$!field.comment" != "")
+        /**
+         * ${field.comment}
+         */
+    #end
+    @Schema(description = "$!{field.comment}")
+    private ${field.propertyType} ${field.propertyName};
+#end
+}

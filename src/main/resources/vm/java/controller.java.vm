@@ -1,0 +1,115 @@
+package ${package.Controller};
+
+import ${package.Service}.${table.serviceName};
+import ${cfg.dtoPackage}.${entity}DTO;
+import ${cfg.queryDtoPackage}.${entity}QueryDTO;
+import ${cfg.voPackage}.${entity}VO;
+import com.zyh.utils.ActionResult;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Set;
+
+/**
+ * $!{table.comment} 前端控制器
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#set($pathPrefix = "${cfg.requestPathPrefix}${table.entityPath}")
+@Tag(name = "$!{table.comment}", description = "${table.controllerName}")
+@Validated
+@CrossOrigin
+@RestController
+@RequestMapping("$pathPrefix")
+public class ${table.controllerName} {
+
+    @Autowired
+    private ${table.serviceName}  ${table.entityPath}Service;
+
+    /**
+     * 分页查询
+     *
+     * @param pageable
+     * @return
+     */
+    @Operation(summary = "分页")
+    @RequestMapping(value = "/page", method = {RequestMethod.POST, RequestMethod.GET})
+    public ActionResult<List<${entity}VO>>page(@ParameterObject @PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
+        @ParameterObject ${entity}QueryDTO queryDto){
+        return ActionResult.success(${table.entityPath}Service.page(pageable,queryDto));
+    }
+
+    /**
+     * 列表查询
+     *
+     * @param sort
+     * @return
+     */
+    @Operation(summary = "列表")
+    @RequestMapping(value = "/list", method = {RequestMethod.POST, RequestMethod.GET})
+    public ActionResult<List<${entity}VO>>list(@ParameterObject @SortDefault(sort = "createTime", direction = Sort.Direction.DESC) Sort sort,
+        @ParameterObject ${entity}QueryDTO queryDto){
+        return ActionResult.success(${table.entityPath}Service.list(sort,queryDto));
+    }
+
+    /**
+     * 保存
+     *
+     * @param dto
+     * @return
+     */
+    @Operation(summary = "保存")
+    @PostMapping("/save")
+    public ActionResult<Void> save(@Validated @RequestBody ${entity}DTO dto){
+         ${table.entityPath}Service.save(dto);
+        return ActionResult.success();
+    }
+
+    /**
+     * 修改
+     *
+     * @param dto
+     * @return
+     */
+    @Operation(summary = "修改")
+    @PostMapping(value = "/update")
+    public ActionResult<Void> update(@Validated @RequestBody ${entity}DTO dto){
+        ${table.entityPath}Service.update(dto);
+        return ActionResult.success();
+    }
+
+    /**
+     * 查询详情
+     *
+     * @param id
+     * @return
+     */
+    @Operation(summary = "查询详情")
+    @GetMapping("/get")
+    public ActionResult<${entity}VO> get(@Parameter(description = "记录ID") @RequestParam String id){
+        return ActionResult.success(${table.entityPath}Service.get(id));
+    }
+
+    /**
+     * 删除
+     *
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value = "/delete", method = {RequestMethod.GET})
+    public ActionResult<Void> delete(@RequestParam Set<String> ids){
+        ${table.entityPath}Service.delete(ids);
+        return ActionResult.success("删除成功");
+    }
+}

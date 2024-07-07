@@ -1,0 +1,99 @@
+package ${package.Controller};
+
+
+import org.springframework.web.bind.annotation.*;
+import javax.annotation.Resource;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import ${package.Service}.${table.serviceName};
+import ${package.Entity}.${entity};
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+#else
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+/**
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@RestController
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+public class ${table.controllerName} {
+
+    @Resource
+    private ${table.serviceName} ${table.entityPath}Service;
+
+    /**
+     * 查询所有接口
+     * @return
+     */
+    @GetMapping
+    public ActionResult findAll() {
+        return ActionResult.success(${table.entityPath}Service.list());
+    }
+
+    /**
+     * 根据id查询数据接口
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public ActionResult findOne(@PathVariable Integer id) {
+        return ActionResult.success(${table.entityPath}Service.getById(id));
+    }
+
+    /**
+     * 分页查询接口
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/page")
+    public ActionResult findPage(@RequestParam Integer pageNum,@RequestParam Integer pageSize) {
+        QueryWrapper<${entity}> queryWrapper = new QueryWrapper<>();
+        return ActionResult.success(${table.entityPath}Service.page(new Page<>(pageNum, pageSize), queryWrapper));
+    }
+
+    /**
+     * 新增和更新接口
+     * @param
+     * @return
+     */
+    @PostMapping
+    public ActionResult save(@RequestBody ${entity} ${table.entityPath}) {
+        ${table.entityPath}Service.saveOrUpdate(${table.entityPath});
+        return ActionResult.success();
+    }
+
+    /**
+     * 删除接口
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    public ActionResult delete(@PathVariable Integer id) {
+        ${table.entityPath}Service.removeById(id);
+        return ActionResult.success();
+    }
+
+    /**
+     * 批量删除接口
+     * @param ids
+     * @return
+     */
+    @PostMapping("/del/batch")
+    public ActionResult deleteBatch(@RequestBody List<Integer> ids) {
+        ${table.entityPath}Service.removeByIds(ids);
+        return ActionResult.success();
+    }
+}
