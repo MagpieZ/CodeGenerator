@@ -62,6 +62,9 @@ public class AccountController {
     @RequestMapping(value = "/list", method = {RequestMethod.POST, RequestMethod.GET})
     public ActionResult<List<AccountVO>> list(@ParameterObject @SortDefault(sort = "createTime", direction = Sort.Direction.DESC) Sort sort,
                                               @ParameterObject AccountQueryDTO queryDto) {
+        if (queryDto == null) {
+            queryDto = new AccountQueryDTO();
+        }
         return ActionResult.success(accountService.list(sort, queryDto));
     }
 
