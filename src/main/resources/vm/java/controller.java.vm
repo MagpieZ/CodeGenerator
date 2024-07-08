@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -45,7 +46,7 @@ public class ${table.controllerName} {
      */
     @Operation(summary = "分页")
     @RequestMapping(value = "/page", method = {RequestMethod.POST, RequestMethod.GET})
-    public ActionResult<List<${entity}VO>>page(@ParameterObject @PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
+    public ActionResult<Page<${entity}VO>>page(@ParameterObject @PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
         @ParameterObject ${entity}QueryDTO queryDto){
         return ActionResult.success(${table.entityPath}Service.page(pageable,queryDto));
     }

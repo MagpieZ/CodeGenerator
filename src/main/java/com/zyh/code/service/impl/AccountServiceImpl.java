@@ -1,22 +1,24 @@
 package com.zyh.code.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
 import com.zyh.code.mapper.AccountMapper;
 import com.zyh.code.entity.Account;
 import com.zyh.code.service.AccountService;
 import com.zyh.code.support.dto.AccountDTO;
 import com.zyh.code.support.dto.query.AccountQueryDTO;
 import com.zyh.code.support.vo.AccountVO;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.util.Assert;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,21 +27,30 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * 服务实现类
+ *  服务实现类
  *
  * @author zyh
- * @since 2024-07-07
+ * @since 2024-07-08
  */
 @Service
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImpl implements AccountService{
 
-    @Autowired
-    private AccountMapper accountMapper;
+@Autowired
+private AccountMapper accountMapper;
 
     @Transactional(readOnly = true)
     @Override
-    public List<AccountVO> page(Pageable pageable, AccountQueryDTO queryDto) {
-        return null;
+    public Page<AccountVO> page(Pageable pageable, AccountQueryDTO queryDto) {
+        PageHelper.startPage(pageable.getPageNumber(), pageable.getPageSize());
+        QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
+        List<AccountVO> list = this.transferVo(this.accountMapper.selectList(queryWrapper));
+        //当前页第一条数据在list中的位置
+        int start = (int) pageable.getOffset();
+        //当前页最后一条数据在list中的位置
+        int end = Math.min((start + pageable.getPageSize()), list.size());
+        Page<AccountVO> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
+
+        return page;
     }
 
     @Transactional(readOnly = true)
@@ -71,7 +82,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void delete(Set<String> ids) {
         if (CollectionUtils.isNotEmpty(ids)) {
-            accountMapper.deleteBatchIds(ids);
+         accountMapper.deleteBatchIds(ids);
         }
     }
 

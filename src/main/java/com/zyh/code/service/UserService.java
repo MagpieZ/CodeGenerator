@@ -1,5 +1,6 @@
 package com.zyh.code.service;
 
+import org.springframework.data.domain.Page;
 import com.zyh.code.support.dto.UserDTO;
 import com.zyh.code.support.dto.query.UserQueryDTO;
 import com.zyh.code.support.vo.UserVO;
@@ -24,7 +25,7 @@ public interface UserService {
      * @param queryDto
      * @return
      */
-    List<UserVO> page(Pageable pageable, UserQueryDTO queryDto);
+    Page<UserVO> page(Pageable pageable, UserQueryDTO queryDto);
 
     /**
      * 列表

@@ -3,6 +3,7 @@ package ${package.Service};
 import ${cfg.dtoPackage}.${entity}DTO;
 import ${cfg.queryDtoPackage}.${entity}QueryDTO;
 import ${cfg.voPackage}.${entity}VO;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
@@ -24,7 +25,7 @@ public interface ${table.serviceName} {
          * @param queryDto
          * @return
          */
-        List<${entity}VO> page(Pageable pageable, ${entity}QueryDTO queryDto);
+        Page<${entity}VO> page(Pageable pageable, ${entity}QueryDTO queryDto);
 
         /**
          * 列表

@@ -1,9 +1,9 @@
 package com.zyh.code.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zyh.code.mapper.UserMapper;
+import com.github.pagehelper.PageHelper;
 import com.zyh.code.entity.User;
+import com.zyh.code.mapper.UserMapper;
 import com.zyh.code.service.UserService;
 import com.zyh.code.support.dto.UserDTO;
 import com.zyh.code.support.dto.query.UserQueryDTO;
@@ -12,6 +12,8 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -39,8 +41,17 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<UserVO> page(Pageable pageable, UserQueryDTO queryDto) {
-        return null;
+    public Page<UserVO> page(Pageable pageable, UserQueryDTO queryDto) {
+        PageHelper.startPage(pageable.getPageNumber(), pageable.getPageSize());
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        List<UserVO> list = this.transferVo(this.userMapper.selectList(queryWrapper));
+        //当前页第一条数据在list中的位置
+        int start = (int) pageable.getOffset();
+        //当前页最后一条数据在list中的位置
+        int end = Math.min((start + pageable.getPageSize()), list.size());
+        Page<UserVO> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
+
+        return page;
     }
 
     @Transactional(readOnly = true)

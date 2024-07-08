@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -21,10 +22,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 前端控制器
+ *  前端控制器
  *
  * @author zyh
- * @since 2024-07-07
+ * @since 2024-07-08
  */
 @Tag(name = "", description = "AccountController")
 @Validated
@@ -34,7 +35,7 @@ import java.util.Set;
 public class AccountController {
 
     @Autowired
-    private AccountService accountService;
+    private AccountService  accountService;
 
     /**
      * 分页查询
@@ -44,12 +45,9 @@ public class AccountController {
      */
     @Operation(summary = "分页")
     @RequestMapping(value = "/page", method = {RequestMethod.POST, RequestMethod.GET})
-    public ActionResult<List<AccountVO>> page(@ParameterObject @PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
-                                              @ParameterObject AccountQueryDTO queryDto) {
-        if (queryDto == null) {
-            queryDto = new AccountQueryDTO();
-        }
-        return ActionResult.success(accountService.page(pageable, queryDto));
+    public ActionResult<Page<AccountVO>>page(@ParameterObject @PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
+        @ParameterObject AccountQueryDTO queryDto){
+        return ActionResult.success(accountService.page(pageable,queryDto));
     }
 
     /**
@@ -60,12 +58,9 @@ public class AccountController {
      */
     @Operation(summary = "列表")
     @RequestMapping(value = "/list", method = {RequestMethod.POST, RequestMethod.GET})
-    public ActionResult<List<AccountVO>> list(@ParameterObject @SortDefault(sort = "createTime", direction = Sort.Direction.DESC) Sort sort,
-                                              @ParameterObject AccountQueryDTO queryDto) {
-        if (queryDto == null) {
-            queryDto = new AccountQueryDTO();
-        }
-        return ActionResult.success(accountService.list(sort, queryDto));
+    public ActionResult<List<AccountVO>>list(@ParameterObject @SortDefault(sort = "createTime", direction = Sort.Direction.DESC) Sort sort,
+        @ParameterObject AccountQueryDTO queryDto){
+        return ActionResult.success(accountService.list(sort,queryDto));
     }
 
     /**
@@ -76,8 +71,8 @@ public class AccountController {
      */
     @Operation(summary = "保存")
     @PostMapping("/save")
-    public ActionResult<Void> save(@Validated @RequestBody AccountDTO dto) {
-        accountService.save(dto);
+    public ActionResult<Void> save(@Validated @RequestBody AccountDTO dto){
+         accountService.save(dto);
         return ActionResult.success();
     }
 
@@ -89,7 +84,7 @@ public class AccountController {
      */
     @Operation(summary = "修改")
     @PostMapping(value = "/update")
-    public ActionResult<Void> update(@Validated @RequestBody AccountDTO dto) {
+    public ActionResult<Void> update(@Validated @RequestBody AccountDTO dto){
         accountService.update(dto);
         return ActionResult.success();
     }
@@ -102,7 +97,7 @@ public class AccountController {
      */
     @Operation(summary = "查询详情")
     @GetMapping("/get")
-    public ActionResult<AccountVO> get(@Parameter(description = "记录ID") @RequestParam String id) {
+    public ActionResult<AccountVO> get(@Parameter(description = "记录ID") @RequestParam String id){
         return ActionResult.success(accountService.get(id));
     }
 
@@ -113,7 +108,7 @@ public class AccountController {
      * @return
      */
     @RequestMapping(value = "/delete", method = {RequestMethod.GET})
-    public ActionResult<Void> delete(@RequestParam Set<String> ids) {
+    public ActionResult<Void> delete(@RequestParam Set<String> ids){
         accountService.delete(ids);
         return ActionResult.success("删除成功");
     }

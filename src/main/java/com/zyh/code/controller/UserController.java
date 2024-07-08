@@ -1,5 +1,6 @@
 package com.zyh.code.controller;
 
+import org.springframework.data.domain.Page;
 import com.zyh.code.service.UserService;
 import com.zyh.code.support.dto.UserDTO;
 import com.zyh.code.support.dto.query.UserQueryDTO;
@@ -44,8 +45,8 @@ public class UserController {
      */
     @Operation(summary = "分页")
     @RequestMapping(value = "/page", method = {RequestMethod.POST, RequestMethod.GET})
-    public ActionResult<List<UserVO>>page(@ParameterObject @PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
-        @ParameterObject UserQueryDTO queryDto){
+    public ActionResult<Page<UserVO>>page(@ParameterObject @PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
+                                          @ParameterObject UserQueryDTO queryDto){
         return ActionResult.success(userService.page(pageable,queryDto));
     }
 
