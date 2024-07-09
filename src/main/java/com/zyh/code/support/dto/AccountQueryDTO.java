@@ -11,12 +11,17 @@ import java.util.Date;
 import com.zyh.code.entity.Account;
 
 /**
- *  查询条件
+ * 账户表 查询条件
  *
  * @author zyh
- * @since 2024-07-08
+ * @since 2024-07-09
  */
 @Data
-@Schema(description = "")
+@Schema(description = "账户表")
 public class AccountQueryDTO extends Account {
+    /**
+     * 用户id
+     */
+    @Schema(description = "用户id")
+    private String id;
 }

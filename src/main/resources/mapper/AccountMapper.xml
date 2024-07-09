@@ -5,7 +5,7 @@
 
         <!-- 通用查询映射结果 -->
         <resultMap id="BaseResultMap" type="com.zyh.code.entity.Account">
-                    <id column="user_id" property="userId" />
+                    <id column="id" property="id" />
                     <result column="total" property="total" />
                     <result column="used" property="used" />
                     <result column="residue" property="residue" />
@@ -14,7 +14,7 @@
         </resultMap>
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-                user_id, total, used, residue, create_time, update_time
+                id, total, used, residue, create_time, update_time
         </sql>
 
     <select id="selectAccountList" resultType="com.zyh.code.support.vo.AccountVO">

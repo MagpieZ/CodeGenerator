@@ -1,6 +1,5 @@
 package com.zyh.code.controller;
 
-import org.springframework.data.domain.Page;
 import com.zyh.code.service.UserService;
 import com.zyh.code.support.dto.UserDTO;
 import com.zyh.code.support.dto.query.UserQueryDTO;
@@ -11,6 +10,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -22,12 +22,12 @@ import java.util.List;
 import java.util.Set;
 
 /**
- *  前端控制器
+ * 用户表 前端控制器
  *
  * @author zyh
- * @since 2024-07-07
+ * @since 2024-07-09
  */
-@Tag(name = "", description = "UserController")
+@Tag(name = "用户表", description = "UserController")
 @Validated
 @CrossOrigin
 @RestController
@@ -45,8 +45,8 @@ public class UserController {
      */
     @Operation(summary = "分页")
     @RequestMapping(value = "/page", method = {RequestMethod.POST, RequestMethod.GET})
-    public ActionResult<Page<UserVO>>page(@ParameterObject @PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
-                                          @ParameterObject UserQueryDTO queryDto){
+    public ActionResult<Page<UserVO>> page(@ParameterObject @PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
+                                                @ParameterObject UserQueryDTO queryDto){
         return ActionResult.success(userService.page(pageable,queryDto));
     }
 
@@ -58,8 +58,8 @@ public class UserController {
      */
     @Operation(summary = "列表")
     @RequestMapping(value = "/list", method = {RequestMethod.POST, RequestMethod.GET})
-    public ActionResult<List<UserVO>>list(@ParameterObject @SortDefault(sort = "createTime", direction = Sort.Direction.DESC) Sort sort,
-        @ParameterObject UserQueryDTO queryDto){
+    public ActionResult<List<UserVO>> list(@ParameterObject @SortDefault(sort = "createTime", direction = Sort.Direction.DESC) Sort sort,
+                                                @ParameterObject UserQueryDTO queryDto){
         return ActionResult.success(userService.list(sort,queryDto));
     }
 
@@ -72,7 +72,7 @@ public class UserController {
     @Operation(summary = "保存")
     @PostMapping("/save")
     public ActionResult<Void> save(@Validated @RequestBody UserDTO dto){
-         userService.save(dto);
+        userService.save(dto);
         return ActionResult.success();
     }
 

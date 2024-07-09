@@ -2,6 +2,7 @@ package ${cfg.voPackage};
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -24,9 +25,12 @@ public class ${entity}VO extends ${entity}{
         #set($keyPropertyName=${field.propertyName})
     #end
     #if("$!field.comment" != "")
-        /**
-         * ${field.comment}
-         */
+    /**
+     * ${field.comment}
+     */
+    #end
+    #if(${field.propertyType.equals("Date")})
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     #end
     @Schema(description = "$!{field.comment}")
     private ${field.propertyType} ${field.propertyName};

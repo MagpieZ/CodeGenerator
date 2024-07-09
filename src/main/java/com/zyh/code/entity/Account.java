@@ -13,11 +13,11 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 
+ * 账户表
  * </p>
  *
  * @author zyh
- * @since 2024-07-08
+ * @since 2024-07-09
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -29,8 +29,8 @@ public class Account implements Serializable {
     /**
      * 用户id
      */
-    @TableId(value = "user_id", type = IdType.ASSIGN_ID)
-    private String userId;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private String id;
 
     /**
      * 总额度

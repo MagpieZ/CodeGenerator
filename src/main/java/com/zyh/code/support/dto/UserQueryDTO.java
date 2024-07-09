@@ -11,17 +11,17 @@ import java.util.Date;
 import com.zyh.code.entity.User;
 
 /**
- * 查询条件
+ * 用户表 查询条件
  *
  * @author zyh
- * @since 2024-07-07
+ * @since 2024-07-09
  */
 @Data
-@Schema(description = "")
+@Schema(description = "用户表")
 public class UserQueryDTO extends User {
     /**
      * 用户id
      */
-//    @Schema(description = "用户id")
-//    private Long id;
+    @Schema(description = "用户id")
+    private Long id;
 }

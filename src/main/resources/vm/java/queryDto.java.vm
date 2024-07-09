@@ -25,12 +25,12 @@ public class ${entity}QueryDTO extends ${entity} {
             #set($keyPropertyName=${field.propertyName})
         #end
         #if("$!field.comment" != "")
-            /**
-             * ${field.comment}
-             */
+    /**
+     * ${field.comment}
+     */
         #end
-        @Schema(description = "$!{field.comment}")
-        private ${field.propertyType} ${field.propertyName};
+    @Schema(description = "$!{field.comment}")
+    private ${field.propertyType} ${field.propertyName};
     #end
 #end
 }

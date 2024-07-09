@@ -2,24 +2,23 @@ package com.zyh.code.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
-import com.zyh.code.entity.User;
 import com.zyh.code.mapper.UserMapper;
+import com.zyh.code.entity.User;
 import com.zyh.code.service.UserService;
 import com.zyh.code.support.dto.UserDTO;
 import com.zyh.code.support.dto.query.UserQueryDTO;
 import com.zyh.code.support.vo.UserVO;
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,16 +27,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * 服务实现类
+ * 用户表 服务实现类
  *
  * @author zyh
- * @since 2024-07-07
+ * @since 2024-07-09
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
 
-    @Autowired
-    private UserMapper userMapper;
+@Autowired
+private UserMapper userMapper;
 
     @Transactional(readOnly = true)
     @Override
@@ -82,8 +81,8 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void delete(Set<String> ids) {
-        if (Objects.isNull(ids)) {
-            userMapper.deleteBatchIds(ids);
+        if (CollectionUtils.isNotEmpty(ids)) {
+         userMapper.deleteBatchIds(ids);
         }
     }
 
@@ -98,7 +97,7 @@ public class UserServiceImpl implements UserService {
 
     private QueryWrapper<User> buildQuery(UserQueryDTO queryDto) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        if (ObjectUtils.isNotEmpty(queryDto)) {
+        if (Objects.nonNull(queryDto)) {
             queryWrapper.lambda().eq(StringUtils.isNotBlank(String.valueOf(queryDto.getId())), User::getId, queryDto.getId());
         }
         return queryWrapper;

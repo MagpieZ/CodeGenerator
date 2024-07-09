@@ -27,10 +27,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- *  服务实现类
+ * 账户表 服务实现类
  *
  * @author zyh
- * @since 2024-07-08
+ * @since 2024-07-09
  */
 @Service
 public class AccountServiceImpl implements AccountService{
@@ -64,17 +64,17 @@ private AccountMapper accountMapper;
     @Override
     public void save(AccountDTO dto) {
         // TODO 唯一性字段校验
-        dto.setUserId(null);
+        dto.setId(null);
         accountMapper.insert(this.transferEntity(null, dto));
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void update(AccountDTO dto) {
-        Assert.hasText(dto.getUserId(), "id不能为空");
+        Assert.hasText(dto.getId(), "id不能为空");
         // TODO 唯一性字段校验
-        Account entity = accountMapper.selectById(dto.getUserId());
-        Assert.notNull(entity, "找不到id为 " + dto.getUserId() + " 的记录");
+        Account entity = accountMapper.selectById(dto.getId());
+        Assert.notNull(entity, "找不到id为 " + dto.getId() + " 的记录");
         accountMapper.updateById(this.transferEntity(entity, dto));
     }
 
@@ -98,7 +98,7 @@ private AccountMapper accountMapper;
     private QueryWrapper<Account> buildQuery(AccountQueryDTO queryDto) {
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
         if (Objects.nonNull(queryDto)) {
-            queryWrapper.lambda().eq(StringUtils.isNotBlank(queryDto.getUserId()), Account::getUserId, queryDto.getUserId());
+            queryWrapper.lambda().eq(StringUtils.isNotBlank(queryDto.getId()), Account::getId, queryDto.getId());
         }
         return queryWrapper;
     }

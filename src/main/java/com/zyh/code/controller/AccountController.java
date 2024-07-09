@@ -22,12 +22,12 @@ import java.util.List;
 import java.util.Set;
 
 /**
- *  前端控制器
+ * 账户表 前端控制器
  *
  * @author zyh
- * @since 2024-07-08
+ * @since 2024-07-09
  */
-@Tag(name = "", description = "AccountController")
+@Tag(name = "账户表", description = "AccountController")
 @Validated
 @CrossOrigin
 @RestController
@@ -45,8 +45,8 @@ public class AccountController {
      */
     @Operation(summary = "分页")
     @RequestMapping(value = "/page", method = {RequestMethod.POST, RequestMethod.GET})
-    public ActionResult<Page<AccountVO>>page(@ParameterObject @PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
-        @ParameterObject AccountQueryDTO queryDto){
+    public ActionResult<Page<AccountVO>> page(@ParameterObject @PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
+                                                @ParameterObject AccountQueryDTO queryDto){
         return ActionResult.success(accountService.page(pageable,queryDto));
     }
 
@@ -58,8 +58,8 @@ public class AccountController {
      */
     @Operation(summary = "列表")
     @RequestMapping(value = "/list", method = {RequestMethod.POST, RequestMethod.GET})
-    public ActionResult<List<AccountVO>>list(@ParameterObject @SortDefault(sort = "createTime", direction = Sort.Direction.DESC) Sort sort,
-        @ParameterObject AccountQueryDTO queryDto){
+    public ActionResult<List<AccountVO>> list(@ParameterObject @SortDefault(sort = "createTime", direction = Sort.Direction.DESC) Sort sort,
+                                                @ParameterObject AccountQueryDTO queryDto){
         return ActionResult.success(accountService.list(sort,queryDto));
     }
 
@@ -72,7 +72,7 @@ public class AccountController {
     @Operation(summary = "保存")
     @PostMapping("/save")
     public ActionResult<Void> save(@Validated @RequestBody AccountDTO dto){
-         accountService.save(dto);
+        accountService.save(dto);
         return ActionResult.success();
     }
 

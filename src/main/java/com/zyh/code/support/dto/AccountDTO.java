@@ -11,32 +11,27 @@ import java.util.Date;
 import com.zyh.code.entity.Account;
 
 /**
- * 
+ * 账户表
  *
  * @author zyh
- * @since 2024-07-08
+ * @since 2024-07-09
  */
 @Data
-@Schema(description = "")
+@Schema(description = "账户表")
 public class AccountDTO extends Account {
-                /**
-                 * 用户id
-                 */
-            @Schema(description = "用户id userId")
-            private String userId;
-                /**
-                 * 总额度
-                 */
-            @Schema(description = "总额度 total")
-            private Integer total;
-                /**
-                 * 已用账户余额
-                 */
-            @Schema(description = "已用账户余额 used")
-            private Integer used;
-                /**
-                 * 余额
-                 */
-            @Schema(description = "余额 residue")
-            private Integer residue;
+    /**
+     * 总额度
+     */
+    @Schema(description = "总额度 total")
+    private Integer total;
+    /**
+     * 已用账户余额
+     */
+    @Schema(description = "已用账户余额 used")
+    private Integer used;
+    /**
+     * 余额
+     */
+    @Schema(description = "余额 residue")
+    private Integer residue;
 }

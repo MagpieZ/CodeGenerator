@@ -8,15 +8,15 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- *  Mapper接口
+ * 账户表 Mapper接口
  *
  * @author zyh
- * @since 2024-07-08
+ * @since 2024-07-09
  */
 @Mapper
 public interface AccountMapper extends BaseMapper<Account> {
     /**
-     * 查询
+     * 查询账户表
      *
      * @return
      */

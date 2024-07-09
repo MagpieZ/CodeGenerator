@@ -11,32 +11,32 @@ import java.util.Date;
 import com.zyh.code.entity.User;
 
 /**
- * 
+ * 用户表
  *
  * @author zyh
- * @since 2024-07-07
+ * @since 2024-07-09
  */
 @Data
-@Schema(description = "")
+@Schema(description = "用户表")
 public class UserDTO extends User {
-                /**
-                 * 名字
-                 */
-            @Schema(description = "名字 name")
-            private String name;
-                /**
-                 * 总额度
-                 */
-            @Schema(description = "总额度 age")
-            private Integer age;
-                /**
-                 * 性别
-                 */
-            @Schema(description = "性别 gender")
-            private Integer gender;
-                /**
-                 * 余额
-                 */
-            @Schema(description = "余额 phone")
-            private Long phone;
+    /**
+     * 名字
+     */
+    @Schema(description = "名字 name")
+    private String name;
+    /**
+     * 总额度
+     */
+    @Schema(description = "总额度 age")
+    private Integer age;
+    /**
+     * 性别
+     */
+    @Schema(description = "性别 gender")
+    private Integer gender;
+    /**
+     * 余额
+     */
+    @Schema(description = "余额 phone")
+    private Long phone;
 }

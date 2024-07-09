@@ -46,8 +46,8 @@ public class ${table.controllerName} {
      */
     @Operation(summary = "分页")
     @RequestMapping(value = "/page", method = {RequestMethod.POST, RequestMethod.GET})
-    public ActionResult<Page<${entity}VO>>page(@ParameterObject @PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
-        @ParameterObject ${entity}QueryDTO queryDto){
+    public ActionResult<Page<${entity}VO>> page(@ParameterObject @PageableDefault(sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable,
+                                                @ParameterObject ${entity}QueryDTO queryDto){
         return ActionResult.success(${table.entityPath}Service.page(pageable,queryDto));
     }
 
@@ -59,8 +59,8 @@ public class ${table.controllerName} {
      */
     @Operation(summary = "列表")
     @RequestMapping(value = "/list", method = {RequestMethod.POST, RequestMethod.GET})
-    public ActionResult<List<${entity}VO>>list(@ParameterObject @SortDefault(sort = "createTime", direction = Sort.Direction.DESC) Sort sort,
-        @ParameterObject ${entity}QueryDTO queryDto){
+    public ActionResult<List<${entity}VO>> list(@ParameterObject @SortDefault(sort = "createTime", direction = Sort.Direction.DESC) Sort sort,
+                                                @ParameterObject ${entity}QueryDTO queryDto){
         return ActionResult.success(${table.entityPath}Service.list(sort,queryDto));
     }
 
@@ -73,7 +73,7 @@ public class ${table.controllerName} {
     @Operation(summary = "保存")
     @PostMapping("/save")
     public ActionResult<Void> save(@Validated @RequestBody ${entity}DTO dto){
-         ${table.entityPath}Service.save(dto);
+        ${table.entityPath}Service.save(dto);
         return ActionResult.success();
     }
 

@@ -1,9 +1,9 @@
 package com.zyh.code.service;
 
-import org.springframework.data.domain.Page;
 import com.zyh.code.support.dto.UserDTO;
 import com.zyh.code.support.dto.query.UserQueryDTO;
 import com.zyh.code.support.vo.UserVO;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 前端控制器
+ * 用户表 前端控制器
  *
  * @author zyh
- * @since 2024-07-07
+ * @since 2024-07-09
  */
 public interface UserService {
 
@@ -64,4 +64,4 @@ public interface UserService {
      * @param ids
      */
     void delete(Set<String> ids);
-}
+    }
